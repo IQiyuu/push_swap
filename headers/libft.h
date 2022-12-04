@@ -6,7 +6,7 @@
 /*   By: dgoubin <dgoubin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 11:39:27 by dgoubin           #+#    #+#             */
-/*   Updated: 2022/12/03 20:23:37 by dgoubin          ###   ########.fr       */
+/*   Updated: 2022/12/04 12:55:09 by dgoubin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_list	t_list;
 struct s_list
 {
 	int			content;
+	int			index;
 	t_list		*next;
 };
 

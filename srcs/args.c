@@ -6,35 +6,11 @@
 /*   By: dgoubin <dgoubin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 18:25:46 by dgoubin           #+#    #+#             */
-/*   Updated: 2022/12/03 20:39:46 by dgoubin          ###   ########.fr       */
+/*   Updated: 2022/12/04 15:25:31 by dgoubin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_2_merde.h"
-
-static int	has_alpha(char *str)
-{
-	int	cpt;
-
-	cpt = -1;
-	while (str[++cpt])
-	{
-		if ((str[cpt] < '0' || str[cpt] > '9') && str[cpt] != ' ')
-			return (1);
-	}
-	return (0);
-}
-
-static int	is_in(t_list *lst, char *str)
-{
-	while (lst)
-	{
-		if (lst->content == ft_atoi(str))
-			return (1);
-		lst = lst->next;
-	}
-	return (0);
-}
 
 static t_list	*multiples_args(char *str, t_list **lst)
 {
@@ -53,6 +29,43 @@ static t_list	*multiples_args(char *str, t_list **lst)
 	}
 	free(tab);
 	return (*lst);
+}
+
+static t_list	*sort(t_list *lst)
+{
+	int		s;
+	t_list	*tmp;
+
+	tmp = lst;
+	while (tmp->next)
+	{
+		if (tmp->content > tmp->next->content)
+		{
+			s = tmp->next->content;
+			tmp->next->content = tmp->content;
+			tmp->content = s;
+		}
+		tmp = tmp->next;
+	}
+	return (lst);
+}
+
+static t_list	*set_index(t_list *tried, t_list *lst)
+{
+	int		index;
+	t_list	*save;
+
+	index = 0;
+	tried = lst_dup(lst);
+	save = tried;
+	while (!is_sorted(tried))
+		tried = sort(tried);
+	while (tried)
+	{
+		tried->index = index++;
+		tried = tried->next;
+	}
+	return (update(save, lst));
 }
 
 t_list	*create_list(int ac, char **av, t_list *lst)
@@ -80,5 +93,5 @@ t_list	*create_list(int ac, char **av, t_list *lst)
 		else
 			return (NULL);
 	}
-	return (lst);
+	return (set_index(NULL, lst));
 }
